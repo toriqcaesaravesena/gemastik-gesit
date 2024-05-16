@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "635474602893",
+    "project_id": "gesit-gemastik",
+    "storage_bucket": "gesit-gemastik.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635474602893:android:7a32b889ac021076652bc4",
+        "android_client_info": {
+          "package_name": "com.example.gesit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZMbaIUETcLoZZZqudMrAaNj19vSgdbSo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
