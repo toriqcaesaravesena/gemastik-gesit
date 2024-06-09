@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gesit/firebase_options.dart';
 import 'package:gesit/utils/routes.dart';
+import 'package:gesit/viewmodels/pickup_provier.dart';
 import 'package:gesit/viewmodels/user_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => UserProvider(),
         ),
+        ChangeNotifierProvider(create: (_) => LocationProvider()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

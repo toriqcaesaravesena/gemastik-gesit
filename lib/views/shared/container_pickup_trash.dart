@@ -15,7 +15,7 @@ class ContainerPickUpTrash extends StatelessWidget {
   final String status;
   final Color color;
   final Color boxcolor;
-  final int percentage;
+  final double percentage;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class ContainerPickUpTrash extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
-            children: [Center(child: CircleAvatar(radius: 24, child: Icon(Icons.delete),),),
+            children: [const Center(child: CircleAvatar(radius: 24, child: Icon(Icons.delete),),),
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:gesit/viewmodels/pickup_provier.dart';
+import 'package:provider/provider.dart';
 import 'package:gesit/utils/colors.dart';
 import 'package:gesit/views/shared/container_pickup_trash.dart';
 import 'package:latlong2/latlong.dart';
@@ -13,10 +15,19 @@ class PickUpPage extends StatefulWidget {
 
 class _PickUpPageState extends State<PickUpPage> {
   bool isFullScreen = false;
+  final MapController _mapController = MapController();
 
   void toggleFullScreen() {
     setState(() {
       isFullScreen = !isFullScreen;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<LocationProvider>().getCurrentLocation();
     });
   }
 
@@ -29,92 +40,117 @@ class _PickUpPageState extends State<PickUpPage> {
       child: Scaffold(
         body: Stack(
           children: [
-            FlutterMap(
-              options: const MapOptions(
-                initialCenter: LatLng(-8.16492, 113.71536),
-                initialZoom: 18,
-              ),
-              children: [
-                TileLayer(
-                  urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                ),
-                CircleLayer(
-                  circles: [
-                    CircleMarker(
-                      point: const LatLng(-8.16532, 113.71477),
-                      radius: 15,
-                      useRadiusInMeter: true,
-                      color: Colors.red.withOpacity(0.3),
-                      borderColor: Colors.red.withOpacity(0.7),
-                      borderStrokeWidth: 2,
+            Consumer<LocationProvider>(
+              builder: (context, locationProvider, child) {
+                return FlutterMap(
+                  mapController: _mapController,
+                  options: const MapOptions(
+                    initialCenter: LatLng(-8.16492, 113.71536),
+                    initialZoom: 18,
+                  ),
+                  children: [
+                    TileLayer(
+                      urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                     ),
-                    CircleMarker(
-                      point: const LatLng(-8.16422, 113.71598),
-                      radius: 15,
-                      useRadiusInMeter: true,
-                      color: Colors.green.withOpacity(0.3),
-                      borderColor: Colors.green.withOpacity(0.7),
-                      borderStrokeWidth: 2,
-                    ),
-                    CircleMarker(
-                      point: const LatLng(-8.16431, 113.71500),
-                      radius: 15,
-                      useRadiusInMeter: true,
-                      color: Colors.yellow.withOpacity(0.3),
-                      borderColor: Colors.yellow.withOpacity(0.7),
-                      borderStrokeWidth: 2,
+                    if (locationProvider.routePoints.isNotEmpty)
+                      PolylineLayer(
+                        polylines: [
+                          Polyline(
+                            points: locationProvider.routePoints,
+                            color: Colors.grey.shade600,
+                            strokeWidth: 4,
+                          ),
+                        ],
+                      ),
+                    MarkerLayer(
+                      markers: [
+                        Marker(
+                          point: const LatLng(-8.16532, 113.71477),
+                          child: GestureDetector(
+                            onTap: () => locationProvider.setRoute(const LatLng(-8.16532, 113.71477)),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.red.withOpacity(0.3),
+                              radius: 50,
+                              child: CircleAvatar(
+                                backgroundColor: Colors.red.withOpacity(0.7),
+                                radius: 15,
+                                child: const Text("A"),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Marker(
+                          point: const LatLng(-8.16422, 113.71598),
+                          child: GestureDetector(
+                            onTap: () => locationProvider.setRoute(const LatLng(-8.16422, 113.71598)),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.green.withOpacity(0.3),
+                              radius: 50,
+                              child: CircleAvatar(
+                                backgroundColor: Colors.green.withOpacity(0.7),
+                                radius: 15,
+                                child: const Text("B"),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Marker(
+                          point: const LatLng(-8.16431, 113.71480),
+                          child: GestureDetector(
+                            onTap: () => locationProvider.setRoute(const LatLng(-8.16431, 113.71480)),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.yellow.withOpacity(0.3),
+                              radius: 50,
+                              child: CircleAvatar(
+                                backgroundColor: Colors.yellow.withOpacity(0.7),
+                                radius: 15,
+                                child: const Text("C"),
+                              ),
+                            ),
+                          ),
+                        ),
+                        if (locationProvider.currentUserLocation != null)
+                          Marker(
+                            point: locationProvider.currentUserLocation!,
+                            child: const Icon(
+                              Icons.location_on,
+                              color: Colors.red,
+                              size: 40,
+                            ),
+                          ),
+                      ],
                     ),
                   ],
-                ),
-                const MarkerLayer(
-                  markers: [
-                    Marker(
-                      point: LatLng(-8.16532, 113.71477),
-                      child: Text(
-                        " A ",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-
-                        ),
-                      ),
-                    ),
-                    Marker(
-                      point: LatLng(-8.16422, 113.71598),
-                      child:  Text(
-                        " B ",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-
-                        ),
-                      ),
-                    ),
-                    Marker(
-                      point: LatLng(-8.16431, 113.71500),
-                      child: Text(
-                        " C ",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                );
+              },
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: FloatingActionButton(
-                elevation: 0.0,
-                backgroundColor: Colors.transparent,
-                onPressed: () => Navigator.pop(context),
-                child: const Center(child: Icon(Icons.arrow_back_ios)),
+              child: Column(
+                children: [
+                  FloatingActionButton(
+                    heroTag: "back_button",  // Unique heroTag
+                    elevation: 0.0,
+                    backgroundColor: Colors.transparent,
+                    onPressed: () => Navigator.pop(context),
+                    child: const Center(child: Icon(Icons.arrow_back_ios)),
+                  ),
+                  const SizedBox(height: 8.0),
+                  FloatingActionButton(
+                    heroTag: "location_button",  // Unique heroTag
+                    onPressed: () {
+                      final provider = context.read<LocationProvider>();
+                      provider.getCurrentLocation().then((_) {
+                        if (provider.currentUserLocation != null) {
+                          _mapController.move(provider.currentUserLocation!, 18); // Center the map
+                        }
+                      });
+                    },
+                    child: const Icon(Icons.my_location),
+                    backgroundColor: Colors.grey.shade200,
+                    elevation: 1,
+                  ),
+                ],
               ),
             ),
             Align(

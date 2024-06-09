@@ -1,7 +1,6 @@
 import 'package:gesit/main.dart';
 import 'package:gesit/views/auth/signin_page.dart';
 import 'package:gesit/views/homepage.dart';
-import 'package:gesit/views/pages/information/information_page.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter router = GoRouter(
