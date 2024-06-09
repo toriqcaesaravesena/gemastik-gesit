@@ -39,25 +39,10 @@ class UserProvider with ChangeNotifier {
   }
 
   // Login User
-  Future<String> loginUser({
-    required String email,
-    required String password,
-  }) async {
-    String res = "";
-
-    try {
-      if (email.isNotEmpty || password.isNotEmpty) {
-        await _auth.signInWithEmailAndPassword(
-            email: email, password: password);
-        res = "success";
-      } else {
-        res = "Email and password must not be empty";
-      }
-    } catch (e) {
-      res = e.toString();
-    }
+  Future<void> loginUser(
+      {required String email, required String password}) async {
+    await _auth.signInWithEmailAndPassword(email: email, password: password);
     notifyListeners();
-    return res;
   }
 
   // Sign Out User
