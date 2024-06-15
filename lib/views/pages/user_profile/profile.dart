@@ -1,10 +1,9 @@
-// ignore_for_file: avoid_unnecessary_containers
-
 import 'package:flutter/material.dart';
 // ignore: unnecessary_import
 import 'package:flutter/widgets.dart';
 import 'package:gesit/utils/colors.dart';
 import 'package:gesit/viewmodels/user_provider.dart';
+import 'package:gesit/views/auth/signin_page.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -35,7 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           Center(
               child: CircleAvatar(
-            radius: 65,backgroundColor: blueColor,
+            radius: 65, backgroundColor: blueColor,
             // child: const Image(image: AssetImage("assets/images/profile.png")),
           )),
           const SizedBox(
@@ -80,7 +79,10 @@ class _ProfilePageState extends State<ProfilePage> {
                               CircleAvatar(
                                 backgroundColor: lightBlueColor,
                                 radius: 24,
-                                child: const Icon(Icons.person, color: profileColor,),
+                                child: const Icon(
+                                  Icons.person,
+                                  color: profileColor,
+                                ),
                               ),
                               const SizedBox(
                                 width: 20,
@@ -90,7 +92,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   const SizedBox(
-                                    width: 150,
+                                    width: 130,
                                     // color: Colors.grey,
                                     child: Column(
                                       mainAxisAlignment:
@@ -150,7 +152,10 @@ class _ProfilePageState extends State<ProfilePage> {
                               CircleAvatar(
                                 backgroundColor: lightBlueColor,
                                 radius: 24,
-                                child: const Icon(Icons.email, color: profileColor,),
+                                child: const Icon(
+                                  Icons.email,
+                                  color: profileColor,
+                                ),
                               ),
                               const SizedBox(
                                 width: 20,
@@ -160,7 +165,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   const SizedBox(
-                                    width: 150,
+                                    width: 130,
                                     // color: Colors.grey,
                                     child: Column(
                                       mainAxisAlignment:
@@ -220,7 +225,10 @@ class _ProfilePageState extends State<ProfilePage> {
                               CircleAvatar(
                                 backgroundColor: lightBlueColor,
                                 radius: 24,
-                                child: const Icon(Icons.phone_iphone, color: profileColor,),
+                                child: const Icon(
+                                  Icons.phone_iphone,
+                                  color: profileColor,
+                                ),
                               ),
                               const SizedBox(
                                 width: 20,
@@ -230,7 +238,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   const SizedBox(
-                                    width: 150,
+                                    width: 130,
                                     // color: Colors.grey,
                                     child: Column(
                                       mainAxisAlignment:
@@ -290,7 +298,10 @@ class _ProfilePageState extends State<ProfilePage> {
                               CircleAvatar(
                                 backgroundColor: lightBlueColor,
                                 radius: 24,
-                                child: const Icon(Icons.date_range, color: profileColor,),
+                                child: const Icon(
+                                  Icons.date_range,
+                                  color: profileColor,
+                                ),
                               ),
                               const SizedBox(
                                 width: 20,
@@ -300,7 +311,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   const SizedBox(
-                                    width: 150,
+                                    width: 130,
                                     // color: Colors.grey,
                                     child: Column(
                                       mainAxisAlignment:
@@ -348,71 +359,78 @@ class _ProfilePageState extends State<ProfilePage> {
                   const SizedBox(
                     height: 15,
                   ),
-                  GestureDetector(
-                    onTap: () async {
-                      await Provider.of<UserProvider>(context, listen: false)
-                          .signOutUser();
-                    },
-                    child: SizedBox(
-                        width: double.infinity,
-                        height: 10 * 8,
-                        child: DecoratedBox(
-                          decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Row(
-                              children: [
-                                CircleAvatar(
-                                  backgroundColor: lightBlueColor,
-                                  radius: 24,
-                                  child: const Icon(Icons.exit_to_app, color: profileColor),
-                                ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const SizedBox(
-                                      width: 150,
-                                      // color: Colors.grey,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "Keluar",
-                                            style: TextStyle(
-                                                letterSpacing: -0.3,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                        ],
-                                      ),
+                  SizedBox(
+                      width: double.infinity,
+                      height: 10 * 8,
+                      child: DecoratedBox(
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: lightBlueColor,
+                                radius: 24,
+                                child: const Icon(Icons.exit_to_app,
+                                    color: profileColor),
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const SizedBox(
+                                    width: 130,
+                                    // color: Colors.grey,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Keluar",
+                                          style: TextStyle(
+                                              letterSpacing: -0.3,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ],
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 57),
-                                      child: IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                            Icons.keyboard_arrow_right_rounded,
-                                            size: 40,
-                                            color: greyColor,
-                                          )),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 57),
+                                    child: IconButton(
+                                        onPressed: () async {
+                                          await Provider.of<UserProvider>(
+                                                  context,
+                                                  listen: false)
+                                              .signOutUser();
+                                          // Navigate to the login page
+                                          Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const SignInPage()),
+                                          );
+                                        },
+                                        icon: const Icon(
+                                          Icons.keyboard_arrow_right_rounded,
+                                          size: 40,
+                                          color: greyColor,
+                                        )),
+                                  )
+                                ],
+                              ),
+                            ],
                           ),
-                        )),
-                  ),
+                        ),
+                      )),
                 ],
               ),
             ),

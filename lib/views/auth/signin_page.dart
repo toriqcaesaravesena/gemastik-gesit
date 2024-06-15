@@ -35,7 +35,7 @@ class _SignInPageState extends State<SignInPage> {
     CustomSnackbarLogin.showSnackBarError(context, "Kata Sandi tidak boleh kosong!");
   } else if (_isValidEmail(_emailController.text.trim())) {
     try {
-      await UserProvider().loginUser(
+      await UserProvider().signInWithEmailAndPassword(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim());
     } on FirebaseAuthException catch (e) {
@@ -73,7 +73,6 @@ bool _isValidEmail(String email) {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: SafeArea(
         child: Stack(

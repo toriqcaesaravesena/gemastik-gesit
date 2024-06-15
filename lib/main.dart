@@ -2,10 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gesit/firebase_options.dart';
-import 'package:gesit/utils/routes.dart';
 import 'package:gesit/viewmodels/pickup_provier.dart';
+import 'package:gesit/viewmodels/trash_provider.dart';
 import 'package:gesit/viewmodels/user_provider.dart';
-import 'package:go_router/go_router.dart';
+import 'package:gesit/views/auth/signin_page.dart';
+import 'package:gesit/views/homepage.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -28,15 +29,15 @@ class MyApp extends StatelessWidget {
           create: (_) => UserProvider(),
         ),
         ChangeNotifierProvider(create: (_) => LocationProvider()),
+        ChangeNotifierProvider(create: (_) => TrashProvider()),
       ],
-      child: MaterialApp.router(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Gesit',
-        // theme: ThemeData(fontFamily: 'Poppins'),
         theme: ThemeData(
           textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
         ),
-        routerConfig: router,
+        home: const Wrapper(),
       ),
     );
   }
@@ -65,20 +66,18 @@ class _WrapperState extends State<Wrapper> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (snapshot.hasData && snapshot.data != null) {
-            Future.microtask(() => context.go("/home"));
-          } else {
-            Future.microtask(() => context.go("/signIn"));
-          }
-          return const Center(child: CircularProgressIndicator(),);
-        },
-      ),
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasData && snapshot.data != null) {
+              return const HomePage();
+            } else {
+              return const SignInPage();
+            }
+          }),
     );
   }
 }

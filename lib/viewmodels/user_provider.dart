@@ -8,19 +8,18 @@ import 'package:gesit/views/auth/signin_page.dart';
 
 class UserProvider with ChangeNotifier {
 
-  final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
+ final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  bool get isSignedIn => _auth.currentUser != null;
-
+  User? get currentUser => _auth.currentUser;
+  Stream<User?> get authStateChanges => _auth.authStateChanges();
   UserModel? _user;
-
   UserModel? get getUser => _user;
 
   Future<UserModel?> getUserDetails() async {
     if (_auth.currentUser != null) {
       User currentUser = _auth.currentUser!;
-      DocumentSnapshot snap = await _fireStore.collection('users').doc(currentUser.uid).get();
+      DocumentSnapshot snap =
+          await _fireStore.collection('users').doc(currentUser.uid).get();
       return UserModel.fromSnap(snap);
     } else {
       log("Tidak ada pengguna yang masuk.");
@@ -38,8 +37,8 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // Login User
-  Future<void> loginUser(
+  // Login
+  Future<void> signInWithEmailAndPassword(
       {required String email, required String password}) async {
     await _auth.signInWithEmailAndPassword(email: email, password: password);
     notifyListeners();
