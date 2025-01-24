@@ -41,7 +41,7 @@ class ContainerInformasi extends StatelessWidget {
               ],
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 5),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
               child: Row(
                 children: [
                   Padding(

@@ -317,7 +317,7 @@ class _HomePageState extends State<HomePage> {
                                     image: AssetImage(
                                         "assets/images/informasi.png"),
                                   ),
-                                  SizedBox(height: 15),
+                                  SizedBox(height: 10),
                                   Center(
                                     child: Text(
                                       "Informasi",
